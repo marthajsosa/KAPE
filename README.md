@@ -11,19 +11,17 @@ To automate and scale digital forensic collection and analysis using KAPE and Po
 - Collecting specific artifact types from live or offline systems
 - Parsing output from KAPE modules
 - Filtering forensic data for incident triage
-- Automating timeline creation and evidence sorting
-
 ---
 
 ## 🧰 Toolkit Contents
 
 | Script Name | Description |
 |-------------|-------------|
-| `Invoke-KapeRun.ps1` | Runs KAPE with JSON input, validates schema, and handles output organization |
-| `Parse-SQLECmd.ps1` | Post-processing of SQLECmd results into timeline-friendly format |
-| `Timeline-Builder.ps1` | Aggregates outputs from multiple KAPE modules into a unified timeline |
-| `KapeSchema.json` | Defines required/optional fields for KAPE job configuration |
-| `SampleInputs/` | Example JSON files for common DFIR scenarios |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
 
 ---
 
@@ -32,25 +30,7 @@ To automate and scale digital forensic collection and analysis using KAPE and Po
 ### 🔹 Running a Targeted KAPE Collection
 
 ```powershell
-.\Invoke-KapeRun.ps1 -InputConfig .\SampleInputs\BrowserArtifacts.json
-# KAPE
 
-## 1. Description
-
-<details open>
-<summary>Expand/Collapse</summary>
-
-Descript KAPE and it's value to incident responder
-
-### Tool Access and Provisioning
-
-## Kape Tool 1
-<blockquote>quick description</blockquote>
-
-### PowerShell Script for Kape Tool 1
-
-```Logscale
-PowerShell Script for Kape Tool 1
 ```
 
 Note:
