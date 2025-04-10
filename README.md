@@ -29,6 +29,11 @@ These simple scripts can be modified to fit your needs and used to automate fore
 |WER | .dmp files are WER files created when a program crashes or encounters an error and contains the time of error, memory contents, and code that caused the crash. |
 |Scheduled Tasks  | Automated processes set to run at specific times or under certain conditions. |
 |Active SMB and Network Shares  | Provides real-time user activity, unauthorized access, and data exfil. |
+|DNS Cache  | Temp database that has recent DNS lookup records. |
+|Shadow Copies  | Point-in-time snapshot of files or entire volumes created by VSS in Windows |
+|Running Services  | Can identify operations that are happening at the time of an incident like network connections, file access, track file execution, and user behavior. |
+|Browser History  | Gives insight into user's online activities, downloads, and search keywords. |
+|Windows Event Logs  | Provides detailed record of system and user activities including authentication attempts, process executions, and file access. |
 
 ---
 
@@ -220,5 +225,109 @@ Get-SMBSession | Select SessionId, ClientComputerName, ClientUserName, NumOpens 
 Note:
 - Task definitions are stored at C:\Windows\System32\Tasks\
 - Task logs are stored at C:\Windows\System32\Winevt\Logs\Microsoft-Windows-TaskScheduler%4Operational.evtx
+- Note
+- Note
+
+---
+
+## DNS Cache
+
+```cmd
+ipconfig /displaydns
+```
+
+```powershell
+Get-DnsClientCache
+```
+
+```powershell
+Get-DnsClientCache | Selection-Object Entry,Name,Status,Type,TimeToLive,Data | Export-Csv -NoTypeInformation -Path C:\Temp\DnsCache.csv
+```
+
+Note:
+- Note
+- Note
+- Note
+
+---
+
+
+## Shadow Copies
+
+```powershell
+.\VSCMount.exe --dl C --mp \demo
+```
+
+Note:
+- VSCMount.exe
+- Note
+- Note
+
+---
+
+## Running Services
+
+```powershell
+Get-Service | Where-Object {$_.Status -eq 'Running'} | Select-Object -Property Name, Display, Status | Export-Csv -Path C:\Temp\Services.csv -NoTypeInformation
+```
+
+```powershell
+Get-CimInstance Win32_Process | Select ProcessID, ProcessName, Path, CommandLine, Description, ParentProcessID, CreationDate, Handle, HandleCount, @{Label='MD5'; Expression={(Get-FileHash -Algorithm MD5 -Literal Path $_.Path).Hash}} | Export-Csv -NoTypeInformation -Path C:\PWSH-Get-CIM_ProcessList.csv
+```
+
+Note:
+- Most are stored in C:\Windows\System32 or C:\Program Files
+- Note
+- Note
+
+---
+
+## Browser History
+
+- Retrieve the db browser files and upload to https://extendsclass.com/sqlite-browser.html#
+- Query: select * from urls;
+- Run
+- Export results to csv
+- Save as xlsx
+- Change webkit time to human readable time, enter forumula: =(F2/1000000 - 11644473600) / 86400 + DATE(1970,1,1), Right click, format cells, Date, choose best date format.
+
+
+Note:
+- Chrome History file path C:\Users\<user>\AppData\Local\Google\Chrome\User Data\Default\History
+- Edge History file path C:\Users\<user>\AppData\Local\Microsoft\Edge\User Data\Default\History
+- Firefox History C:\Users\<user>\AppData\Roaming\Mozilla\Firefox\Profiles\<ProfileName>\places.sqlite
+- Safari History :/Users/<username>/Library/Safari/History.db
+
+---
+
+## Windows Event Logs
+
+Security Logs: 
+
+```powershell
+.\EvtxECmd.exe -f C:\Windows\System32\winevt\Logs\Security.evtx --csv .
+```
+
+Task Scheduler Events: 
+```powershell
+.\EvtxECmd.exe -f "C:\Windows\System32\winevt\Logs\Microsoft-Windows-TaskScheduler%4Operational.evtx" --csv .
+```
+
+PowerShell: 
+```powershell
+ .\EvtxECmd.exe -f C:\Windows\System32\winevt\Logs\Windows PowerShell.evtx" --csv .
+```
+
+Applications: 
+```powershell
+ .\EvtxECmd.exe -f C:\Windows\System32\winevt\Logs\Application.evtx --csv .
+```
+
+System: 
+```powershell  
+ .\EvtxECmd.exe -f C:\Windows\System32\winevt\Logs\System.evtx --csv .
+```
+
+Note:
 - Note
 - Note
