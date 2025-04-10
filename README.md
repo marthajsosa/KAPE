@@ -4,9 +4,9 @@ This repository contains PowerShell scripts and automation examples for extracti
 
 ---
 
-## 🔍 Purpose
+## Purpose
 
-To automate and scale digital forensic collection and analysis using KAPE and PowerShell. Use cases include:
+These simple scripts can be modified to fit your needs and used to automate forensic collection and analysis using KAPE and PowerShell. Use cases include:
 
 - Collecting specific artifact types from live or offline systems
 - Parsing output from KAPE modules
@@ -32,7 +32,7 @@ To automate and scale digital forensic collection and analysis using KAPE and Po
 
 ---
 
-## 🧪 Examples
+## Scripts
 
 ### Shimcache
 
